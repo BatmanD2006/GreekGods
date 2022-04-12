@@ -35,11 +35,13 @@ public class Bolt extends Item {
             double y= lookingAt.getHitVec().getY();
             double z = lookingAt.getHitVec().getZ();
 
+            //LightningBoltEntity lightBolt= new LightningBoltEntity(worldIn, x, y, z, false);
             LightningBoltEntity lightBolt= new LightningBoltEntity(worldIn, x, y, z, false);
             //LightningBoltEntity lightBolt= new LightningBoltEntity(worldIn, playerIn.getPosX() + x*10D, playerIn.getPosY()+y*10D, playerIn.getPosZ()+z*10D, false);
             world.addLightningBolt(lightBolt);
             lightBolt.setGlowing(true);
-            System.out.println(playerIn.getPosX()+ x*15D);
+            System.out.println(RayTraceUtil.getTargetBlock(playerIn, worldIn, 20));
+            System.out.println(RayTraceUtil.getTargetBlockPos(playerIn, worldIn, 20));
             return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
 
         }
