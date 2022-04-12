@@ -1,0 +1,25 @@
+
+modLoader="javafml" #mandatory
+
+loaderVersion="[31,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+
+[[mods]] #mandatory
+
+modId="firstmod" #mandatory
+
+version="1.0" #mandatory
+
+displayName="First Mod" #mandatory
+
+
+displayURL="http://example.com/" #optional
+
+
+logoFile="examplemod.png" #optional
+
+credits="Thanks for this example mod goes to Java" #optional
+
+authors="Batz" #optional
+
+description='My First test mod'
+
