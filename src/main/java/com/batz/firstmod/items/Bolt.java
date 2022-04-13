@@ -22,7 +22,8 @@ public class Bolt extends Item {
     public Bolt(Properties properties) {
         super(properties);
     }
-@todo Change Lightning Color
+@todo Change Lightning Color, and change lightning damage 
+  
 
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 
