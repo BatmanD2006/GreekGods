@@ -2,6 +2,8 @@ package com.batz.firstmod.items;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -10,6 +12,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -22,36 +25,29 @@ public class Bolt extends Item {
 
 
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        //double x= playerIn.getLookVec().getX();
-        //double y= playerIn.getLookVec().getY();
-        //double z= playerIn.getLookVec().getZ();
 
-        if(!(worldIn instanceof ServerWorld)) return new ActionResult<>(ActionResultType.PASS, playerIn.getHeldItem(handIn));
+        PlayerEntity player = Minecraft.getInstance().player;
+        if (!(worldIn instanceof ServerWorld))
+            return new ActionResult<>(ActionResultType.PASS, playerIn.getHeldItem(handIn));
         ServerWorld world = (ServerWorld) worldIn;
 
-        RayTraceResult lookingAt = Minecraft.getInstance().objectMouseOver;
-        if (lookingAt != null && lookingAt.getType() == RayTraceResult.Type.BLOCK) {
-            double x = lookingAt.getHitVec().getX();
-            double y= lookingAt.getHitVec().getY();
-            double z = lookingAt.getHitVec().getZ();
+        RayTraceResult block = player.pick(30.0D, 0.0F, false);
+        if (block.getType() == RayTraceResult.Type.BLOCK) {
+            BlockPos blockpos = ((BlockRayTraceResult) block).getPos();
+            double x1 = blockpos.getX();
+            double y1 = blockpos.getY();
+            double z1 = blockpos.getZ();
 
-            //LightningBoltEntity lightBolt= new LightningBoltEntity(worldIn, x, y, z, false);
-            LightningBoltEntity lightBolt= new LightningBoltEntity(worldIn, x, y, z, false);
-            //LightningBoltEntity lightBolt= new LightningBoltEntity(worldIn, playerIn.getPosX() + x*10D, playerIn.getPosY()+y*10D, playerIn.getPosZ()+z*10D, false);
+            LightningBoltEntity lightBolt = new LightningBoltEntity(worldIn, x1, y1, z1, false);
             world.addLightningBolt(lightBolt);
             lightBolt.setGlowing(true);
-            System.out.println(RayTraceUtil.getTargetBlock(playerIn, worldIn, 20));
-            System.out.println(RayTraceUtil.getTargetBlockPos(playerIn, worldIn, 20));
             return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
 
         }
         return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
 
 
-
     }
-
-
 
 
 }
